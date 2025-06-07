@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weekly Sales Forecast Dashboard</title>
+  <link rel="stylesheet" href="static/style.css">
+  <!-- Add Chart.js library -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Add date-fns for date manipulation -->
+  <script src="https://cdn.jsdelivr.net/npm/date-fns@2.29.3/index.min.js"></script>
+</head>
+<body>
+  <div class="dashboard">
+    <div class="sidebar">
+      <div class="logo-container">
+        <img src="{{ url_for('static', filename='images/head.jpg') }}" alt="Forecast Logo" class="logo">
+        <h1>Sales Forecast</h1>
+      </div>
+      <div class="input-container">
+        <label for="store">Store</label>
+        <input type="text" id="store" placeholder="e.g. Store #123">
+
+        <label for="start-date">Start Date</label>
+        <input type="date" id="start-date">
+
+        <label for="weeks">Number of Weeks</label>
+        <input type="number" id="weeks" min="1" max="52" value="2" placeholder="e.g. 10">
+        
+        <div class="date-range-display">
+          <span id="date-range-text">Select a start date and number of weeks</span>
+        </div>
+
+        <label for="temperature">Temperature</label>
+        <input type="number" id="temperature" step="0.1" placeholder="e.g. 45.3">
+
+        <label for="fuel_price">Fuel Price</label>
+        <input type="number" id="fuel_price" step="0.01" placeholder="e.g. 3.45">
+
+        <label for="cpi">CPI</label>
+        <input type="number" id="cpi" step="0.01" placeholder="e.g. 211.23">
+
+        <label for="unemployment">Unemployment Rate</label>
+        <input type="number" id="unemployment" step="0.01" placeholder="e.g. 7.8">
+
+        <label for="holiday_flag">Holiday Week (0 or 1)</label>
+        <input type="number" id="holiday_flag" min="0" max="1" placeholder="0 or 1">
+
+        <button onclick="getForecast()">Forecast Sales</button>
+      </div>
+
+      <div class="info-card">
+        <h3>Forecast Summary</h3>
+        <div id="summary-stats">
+          <p>Enter values and click Forecast to see predicted sales.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="main-content">
+      <div class="header">
+        <h2>Weekly Sales Forecast Dashboard</h2>
+        <div class="date-display" id="current-date"></div>
+      </div>
+
+      <!-- Chart containers -->
+      <div class="chart-container">
+        <h3>Weekly Sales Forecast</h3>
+        <canvas id="sales-chart"></canvas>
+      </div>
+
+      <div class="charts-row">
+        <div class="chart-container half-width">
+          <h3>Total Sales by Week</h3>
+          <canvas id="weekly-chart"></canvas>
+        </div>
+        <div class="chart-container half-width">
+          <h3>Weekly Sales Trend</h3>
+          <canvas id="trend-chart"></canvas>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <h3>Weekly Forecasted Sales</h3>
+        <div class="table-scroll">
+          <table id="forecast-table">
+            <thead>
+              <tr>
+                <th>Week</th>
+                <th>Date Range</th>
+                <th>Predicted Sales</th>
+              </tr>
+            </thead>
+            <tbody id="forecast-body">
+              <tr><td colspan="3">Enter values and click Forecast</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="static/script.js"></script>
+</body>
+</html>
